@@ -26,8 +26,10 @@ with open('constatns.txt', 'r') as f:
             break
         line = line.split('=')
         constants[line[0]] = line[1]
-    TOKEN = constants['TOKEN']
+    TOKEN = constants['TOKEN'].rstrip('\n')
     OWNER_USER_ID = int(constants['OWNER_USER_ID'])
+    BACKEND_HOST = constants['BACKEND_HOST'].rstrip('\n')
+    BACKEND_PORT = int(constants['BACKEND_PORT'])
 
 with open('food.txt', 'r', encoding='UTF-8') as f:
     content = f.read().split(',')
@@ -71,7 +73,7 @@ class Basics(commands.Cog):
 
     @commands.command(name="10연챠")
     async def gacha_10(self, ctx):
-        result = requests.get("http://localhost:5555/api/gacha/", params={'gacha_type': 10})
+        result = requests.get(f"http://{BACKEND_HOST}:{BACKEND_PORT}/api/gacha/", params={'gacha_type': 10})
         result.encoding = 'utf-8'
         result = result.text
         result = json.loads(result, )
