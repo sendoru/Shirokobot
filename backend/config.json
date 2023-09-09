@@ -1,0 +1,7 @@
+[
+    {"MONGODB_HOST": "localhost",
+    "MONGODB_PORT": 27017,
+    "MONGODB_USERNAME": "root",
+    "MONGODB_PASSWORD": "password",
+    "HASH": "293468uv23406uvw4u65gb"}
+]
