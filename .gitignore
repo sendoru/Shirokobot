@@ -1,2 +1,7 @@
 /흰둥이.bat
 /shiroko.ico
+/.conda
+/token.txt
+/constatns.txt
+*__pycache__
+/.vscode
