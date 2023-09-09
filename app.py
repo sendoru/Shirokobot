@@ -1,10 +1,15 @@
 import random
 import os
 import asyncio
+import time
+import datetime
 from nextcord.ext import commands
 from nextcord.utils import get
+import nextcord
+import json
 
 from flask import Flask
+import requests
 app = Flask(__name__)
 
 from threading import Thread
@@ -13,11 +18,19 @@ import nextcord
 intents = nextcord.Intents.default()
 intents.message_content = True
 
-TOKEN = os.environ.get('BOT_TOKEN')
+with open('constatns.txt', 'r') as f:
+    constants = dict()
+    while True:
+        line = f.readline()
+        if not line:
+            break
+        line = line.split('=')
+        constants[line[0]] = line[1]
+    TOKEN = constants['TOKEN']
+    OWNER_USER_ID = int(constants['OWNER_USER_ID'])
 
 with open('food.txt', 'r', encoding='UTF-8') as f:
     content = f.read().split(',')
-
 
 class Base(commands.Cog):
     def __init__(self, bot):
@@ -35,11 +48,11 @@ class Base(commands.Cog):
             await callback(message)
             
 class Basics(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.llast_msg = {}
         self.last_msg = {}
-    
+
     @commands.command(name='choose')
     async def choose(self, ctx, *args):
         result = random.randint(0, len(args) - 1)
@@ -49,12 +62,29 @@ class Basics(commands.Cog):
     @commands.command(name='메뉴')
     async def wutfood(self, ctx):
         result = random.randint(0, len(content) - 1)
-        lotto = random.randint(1, 8145060)
+        lotto = random.randint(1, 727)
         if 727 == lotto:
             await ctx.reply('음... 와타시. >//< {}'.format(ctx.author.mention))
             return
         
         await ctx.reply('음... ' + content[result] +'.', mention_author = False)
+
+    @commands.command(name="10연챠")
+    async def gacha_10(self, ctx):
+        result = requests.get("http://localhost:5555/api/gacha/", params={'gacha_type': 10})
+        result.encoding = 'utf-8'
+        result = result.text
+        result = json.loads(result, )
+        message = ""
+        for i in result:
+            cur_str = f"{i['stars']}☆ {i['name'][i['name'].find(' ') + 1:]}"
+            if i['stars'] == 3:
+                message += "**" + cur_str + "**" + "\n"
+            else:
+                message += cur_str + "\n"
+
+        await ctx.reply(message, mention_author = True)
+        
         
     @commands.Cog.listener()
     async def copypasta(self, message):
@@ -74,10 +104,10 @@ class Basics(commands.Cog):
         if repl and len(message.content) > 0:
             await message.channel.send(message.content)
             
-    async def on_message(self, message):
+    async def on_message(self, message: nextcord.Message):
         await self.copypasta(message)
         guild = message.guild
-        
+
         if message.author.bot:
             return
 
@@ -91,7 +121,7 @@ class Basics(commands.Cog):
             
         if '흰둥이' in message.content or '흰둥아' in message.content:
             result = random.randint(0, 1)
-            reaction_list = ['<:shiroko:923136803463114802>', '<:koharu:923137473842929684>']
+            reaction_list = ['<:shiroko_stare:1139804463230627871>', '<:koharu_embarrassed:1139807287305846894>']
             await message.add_reaction(reaction_list[result])
             def check(reaction, user):
                 return str(reaction) in reaction_list and user == message.author and reaction.message.id == message.id
@@ -110,12 +140,13 @@ class Basics(commands.Cog):
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         guild = message.guild
-        author = await guild.fetch_member(payload.user_id)
-        if (channel.id == 730424725678850099 and
-            message.id == 929663235886563388 and
-            payload.emoji.name in reaction_list):
-            role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
-            await author.add_roles(role)
+        if guild is not None:
+            author = await guild.fetch_member(payload.user_id)
+            if (channel.id == 730424725678850099 and
+                message.id == 929663235886563388 and
+                payload.emoji.name in reaction_list):
+                role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
+                await author.add_roles(role)
     
     @commands.Cog.listener('on_raw_reaction_remove')        
     async def remove_role(self, payload):
@@ -130,7 +161,7 @@ class Basics(commands.Cog):
             payload.emoji.name in reaction_list):
             role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
             await author.remove_roles(role)
-            
+
 def is_modding(msg):
     if 2 <= msg.count(':'):
         a = msg.find(':')
@@ -162,21 +193,31 @@ def osu_link(msg):
         result = new_box[0]
     return result
 
+class ShirokoBot(commands.Bot):
+    def __init__(self, **args):
+        super(ShirokoBot, self).__init__(**args)
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        user = await self.fetch_user(OWNER_USER_ID)
+        await user.send("안녕. {} 선생님. 방금 일어났어.".format(user.mention))
+        if datetime.datetime.now().hour < 6:
+            await user.send("음... 지금이 일어날 시간은 아닌 것 같은데...")
+
 def main():
-
     def get_prefix(bot, message):
-        prefixes = ['?']
-
-        # Check to see if we are outside of a guild. e.g DM's etc.
-        if not message.guild:
-            # Only allow ? to be used in DMs
-            return '?'
-
-        # If we are in a guild, we allow for the user to mention us or use any of the prefixes in our list.
+        prefixes = ['!']
         return commands.when_mentioned_or(*prefixes)(bot, message)
+    intents = nextcord.Intents.default()
+    intents.dm_messages = True
+    intents.message_content = True
+    bot = ShirokoBot(command_prefix=get_prefix, description='흰둥이', case_insensitive=True, intents=intents)
 
-    bot = commands.Bot(command_prefix=get_prefix, description='흰둥이', case_insensitive=True, intents=intents)
-    
+    # @bot.event
+    # async def on_ready():
+    #     user = await bot.fetch_user(OWNER_USER_ID)
+    #     await user.send("안녕. {} 선생님. ".format(user.mention))
+
     base_cog = Base(bot)
     bot.add_cog(base_cog)
     base_cog.more_cog(Basics(bot))
@@ -187,7 +228,7 @@ def hello_world():
     return 'Hello, World!'
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='localhost', port=8080)
 
 def web():
     thread = Thread(target=run)
