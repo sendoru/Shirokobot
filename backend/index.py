@@ -11,7 +11,8 @@ with open("config.json") as f:
     MONGODB_PORT = json_obj[0]["MONGODB_PORT"]
     MONGODB_USERNAME = json_obj[0]["MONGODB_USERNAME"]
     MONGODB_PASSWORD = json_obj[0]["MONGODB_PASSWORD"]
-    HASH = json_obj[0]["HASH"]
+    BACKEND_HOST = json_obj[0]["BACKEND_HOST"]
+    BACKEND_PORT = json_obj[0]["BACKEND_PORT"]
 
 mongo_client = pymongo.MongoClient(
     host=MONGODB_HOST,
@@ -36,7 +37,7 @@ def hello_world():
     return 'Hello, World!'
 
 def run():
-    app.run(host='localhost', port=5555)
+    app.run(host=BACKEND_HOST, port=int(BACKEND_PORT))
 
 def web():
     thread = Thread(target=run)
