@@ -1,0 +1,52 @@
+[
+    {
+        "id": 0,
+        "name": "아비도스 고등학교",
+        "consuming_goods_id": 0
+    },
+    {
+        "id": 1,
+        "name": "게헨나 학원",
+        "consuming_goods_id": 1
+    },
+    {
+        "id": 2,
+        "name": "밀레니엄 사이언스 스쿨",
+        "consuming_goods_id": 2
+    },
+    {
+        "id": 3,
+        "name": "트리니티 종합학원",
+        "consuming_goods_id": 3
+    },
+    {
+        "id": 4,
+        "name": "백귀야행 연합학원",
+        "consuming_goods_id": 4
+    },
+    {
+        "id": 5,
+        "name": "산해경 고급중학교",
+        "consuming_goods_id": 5
+    },
+    {
+        "id": 6,
+        "name": "붉은겨울 연방학원",
+        "consuming_goods_id": 6
+    },
+    {
+        "id": 7,
+        "name": "발키리 경찰학교",
+        "consuming_goods_id": 7
+    },
+    {
+        "id": 8,
+        "name": "SRT 특수학원",
+        "consuming_goods_id": 7
+    },
+    {
+        "id": 9,
+        "name": "아리우스 분교",
+        "consuming_goods_id": 9
+    }
+]

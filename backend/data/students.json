@@ -1,0 +1,457 @@
+[
+    {
+        "id": 0,
+        "name": "스나오오카미 시로코",
+        "stars": 3,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 1,
+        "name": "타카나시 호시노",
+        "stars": 3,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 2,
+        "name": "쿠로미 세리카",
+        "stars": 2,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 3,
+        "name": "이자요이 노노미",
+        "stars": 2,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 4,
+        "name": "오쿠소라 아야네",
+        "stars": 2,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 5,
+        "name": "스나오오카미 시로코 (라이딩)",
+        "stars": 3,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 6,
+        "name": "쿠로미 세리카 (새해)",
+        "stars": 3,
+        "school": 0,
+        "affordable": true
+    },
+    {
+        "id": 7,
+        "name": "이자요이 노노미 (수영복)",
+        "stars": 3,
+        "school": 0,
+        "affordable": false
+    },
+    {
+        "id": 8,
+        "name": "오쿠소라 아야네 (수영복)",
+        "stars": 1,
+        "school": 0,
+        "affordable": false
+    },
+    {
+        "id": 9,
+        "name": "타카나시 호시노 (수영복)",
+        "stars": 3,
+        "school": 0,
+        "affordable": false
+    },
+    {
+        "id": 10,
+        "name": "리쿠하치마 아루",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 11,
+        "name": "아사기 무츠키",
+        "stars": 2,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 12,
+        "name": "오니카타 카요코",
+        "stars": 2,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 13,
+        "name": "이구사 하루카",
+        "stars": 1,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 14,
+        "name": "소라사키 히나",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 15,
+        "name": "시로미 이오리",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 16,
+        "name": "히노미야 치나츠",
+        "stars": 1,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 17,
+        "name": "쿠로다테 하루나",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 18,
+        "name": "시시도우 이즈미",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 19,
+        "name": "아카시 준코",
+        "stars": 2,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 20,
+        "name": "와니부치 아카리",
+        "stars": 2,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 21,
+        "name": "아이키요 후우카",
+        "stars": 2,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 22,
+        "name": "우시마키 주리",
+        "stars": 1,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 23,
+        "name": "소라사키 히나 (수영복)",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 24,
+        "name": "시로미 이오리",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 25,
+        "name": "시시도우 이즈미 (수영복)",
+        "stars": 1,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 26,
+        "name": "아마우 아코",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 27,
+        "name": "히노미야 치나츠 (온천)",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 28,
+        "name": "리쿠하치마 아루 (새해)",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 29,
+        "name": "아사기 무츠키 (새해)",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 30,
+        "name": "히무로 세나",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 31,
+        "name": "나츠메 이로하",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 32,
+        "name": "쿠로다테 하루나 (새해)",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 33,
+        "name": "아이키요 후우카 (새해)",
+        "stars": 3,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 34,
+        "name": "아카시 준코 (새해)",
+        "stars": 1,
+        "school": 1,
+        "affordable": false
+    },
+    {
+        "id": 35,
+        "name": "시모쿠라 메구",
+        "stars": 3,
+        "school": 1,
+        "affordable": true
+    },
+    {
+        "id": 36,
+        "name": "하야세 유우카",
+        "stars": 2,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 37,
+        "name": "오미가레 하레",
+        "stars": 2,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 38,
+        "name": "코누리 마키",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 39,
+        "name": "오토세 코타마",
+        "stars": 1,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 40,
+        "name": "미카모 네루",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 41,
+        "name": "이치노세 아스나",
+        "stars": 1,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 42,
+        "name": "카쿠다테 카린",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 43,
+        "name": "무로카사 아카네",
+        "stars": 2,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 44,
+        "name": "시라이시 우타하",
+        "stars": 2,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 45,
+        "name": "네코즈카 히비키",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 46,
+        "name": "토요미 코토리",
+        "stars": 1,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 47,
+        "name": "오토하나 스미레",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 48,
+        "name": "이즈미모토 에이미",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 49,
+        "name": "텐도 아리스",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 50,
+        "name": "사이바 모모이",
+        "stars": 2,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 51,
+        "name": "사이바 미도리",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 52,
+        "name": "하나오카 유즈",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 53,
+        "name": "미카모 네루 (바니걸)",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 54,
+        "name": "카쿠다테 카린 (바니걸)",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 55,
+        "name": "이치노세 아스나 (바니걸)",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 56,
+        "name": "카가미 치히로",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 57,
+        "name": "시라이시 우타하 (응원단)",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 58,
+        "name": "네코즈카 히비키 (응원단)",
+        "stars": 1,
+        "school": 2,
+        "affordable": false
+    },
+    {
+        "id": 59,
+        "name": "우시오 노아",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 60,
+        "name": "무로카사 아카네 (바니걸)",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 61,
+        "name": "하야세 유우카 (체육복)",
+        "stars": 1,
+        "school": 2,
+        "affordable": false
+    },
+    {
+        "id": 62,
+        "name": "아케보시 히마리",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 63,
+        "name": "아스마 토키",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    },
+    {
+        "id": 64,
+        "name": "쿠로사키 코유키",
+        "stars": 3,
+        "school": 2,
+        "affordable": true
+    }
+]
