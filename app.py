@@ -249,6 +249,8 @@ def main():
 
         await interaction.followup.send(message)
 
+    # TODO 이거 슬래시 커맨드 말고 그냥 커맨드로 해야 됨
+    # 슬래시 커멘드에는 그냥 도움말 정도만 놔둘까
     @bot.slash_command(name="run_code", guild_ids=GUILD_IDS, description="코드를 실행한다")
     async def run_code(
         interaction: nextcord.Interaction,
