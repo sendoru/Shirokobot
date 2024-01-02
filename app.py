@@ -6,6 +6,7 @@ import datetime
 from nextcord.ext import commands
 from nextcord.utils import get
 import nextcord
+import nextcord.interactions
 import json
 
 from flask import Flask
@@ -17,6 +18,8 @@ from threading import Thread
 import nextcord
 intents = nextcord.Intents.default()
 intents.message_content = True
+
+GUILD_IDS = [681739906913009731, 557938492592750634]
 
 with open('constatns.txt', 'r') as f:
     constants = dict()
@@ -30,6 +33,7 @@ with open('constatns.txt', 'r') as f:
     OWNER_USER_ID = int(constants['OWNER_USER_ID'])
     BACKEND_HOST = constants['BACKEND_HOST'].rstrip('\n')
     BACKEND_PORT = int(constants['BACKEND_PORT'])
+
 
 with open('food.txt', 'r', encoding='UTF-8') as f:
     content = f.read().split(',')
@@ -54,39 +58,6 @@ class Basics(commands.Cog):
         self.bot = bot
         self.llast_msg = {}
         self.last_msg = {}
-
-    @commands.command(name='choose')
-    async def choose(self, ctx, *args):
-        result = random.randint(0, len(args) - 1)
-        print(args)
-        await ctx.reply(args[result], mention_author = False)
-    
-    @commands.command(name='메뉴')
-    async def wutfood(self, ctx):
-        result = random.randint(0, len(content) - 1)
-        lotto = random.randint(1, 727)
-        if 727 == lotto:
-            await ctx.reply('음... 와타시. >//< {}'.format(ctx.author.mention))
-            return
-        
-        await ctx.reply('음... ' + content[result] +'.', mention_author = False)
-
-    @commands.command(name="10연챠")
-    async def gacha_10(self, ctx):
-        result = requests.get(f"http://{BACKEND_HOST}:{BACKEND_PORT}/api/gacha/", params={'gacha_type': 10})
-        result.encoding = 'utf-8'
-        result = result.text
-        result = json.loads(result, )
-        message = ""
-        for i in result:
-            cur_str = f"{i['stars']}☆ {i['name'][i['name'].find(' ') + 1:]}"
-            if i['stars'] == 3:
-                message += "**" + cur_str + "**" + "\n"
-            else:
-                message += cur_str + "\n"
-
-        await ctx.reply(message, mention_author = True)
-        
         
     @commands.Cog.listener()
     async def copypasta(self, message):
@@ -202,9 +173,7 @@ class ShirokoBot(commands.Bot):
     @commands.Cog.listener()
     async def on_ready(self):
         user = await self.fetch_user(OWNER_USER_ID)
-        await user.send("안녕. {} 선생님. 방금 일어났어.".format(user.mention))
-        if datetime.datetime.now().hour < 6:
-            await user.send("음... 지금이 일어날 시간은 아닌 것 같은데...")
+        await user.send(f"안녕. {user.mention} 선생님")
 
 def main():
     def get_prefix(bot, message):
@@ -223,6 +192,51 @@ def main():
     base_cog = Base(bot)
     bot.add_cog(base_cog)
     base_cog.more_cog(Basics(bot))
+
+    @bot.slash_command(name="choose", guild_ids=GUILD_IDS, description="입력된 항목 중에 하나를 랜덤하게 고릅니다. 각 항목은 띄어쓰기로 구분됩니다.")
+    async def choose(interaction: nextcord.Interaction, args: str):
+        args = args.split(' ')
+        result = random.randint(0, len(args) - 1)
+        # print(args)
+        arg_string = ' '.join(args)
+        await interaction.send(f"{args[result]} (`{arg_string}` 중에서)")
+
+    @bot.slash_command(name="menu", guild_ids=GUILD_IDS, description="저메추")
+    async def wutfood(interaction: nextcord.Interaction):
+        result = random.randint(0, len(content) - 1)
+        lotto = random.randint(1, 727)
+        if 727 == lotto:
+            await interaction.send('음... 와타시. >//< {}'.format(interaction.user.mention))
+            return
+        
+        await interaction.send('음... ' + content[result] +'.')
+
+    @bot.slash_command(name="gacha", guild_ids=GUILD_IDS, description="10연차를 돌립니다")
+    async def gacha_10(interaction: nextcord.Interaction):
+        await interaction.response.defer()
+        try:
+            res = await requests.get(f"http://{BACKEND_HOST}:{BACKEND_PORT}/api/gacha/", params={'gacha_type': 10})
+        except:
+            res = None
+
+        if res is None:
+            await interaction.followup.send(f'선새니 아로나가 일하기 싫은가봐 (Response Code: None)')
+            return
+
+        res.encoding = 'utf-8'
+
+        res = res.text
+        res = json.loads(res, )
+        message = ""
+        for i in res:
+            cur_str = f"{i['stars']}☆ {i['name'][i['name'].find(' ') + 1:]}"
+            if i['stars'] == 3:
+                message += "**" + cur_str + "**" + "\n"
+            else:
+                message += cur_str + "\n"
+
+        await interaction.followup.send(message)
+
     bot.run(TOKEN)
 
 @app.route('/')
