@@ -3,6 +3,7 @@ import os
 import asyncio
 import time
 import datetime
+from typing import Optional
 from nextcord.ext import commands
 from nextcord.utils import get
 import nextcord
@@ -169,6 +170,17 @@ def osu_link(msg):
 class ShirokoBot(commands.Bot):
     def __init__(self, **args):
         super(ShirokoBot, self).__init__(**args)
+        runtime = requests.request("GET", "https://emkc.org/api/v2/piston/runtimes")
+        runtime = runtime.json()
+
+        self.language_alias_to = {}
+        self.language_version = {}
+
+        for elem in runtime:
+            self.language_version[elem['language']] = elem['version']
+            self.language_alias_to[elem['language']] = elem['language']
+            for alias in elem['aliases']:
+                self.language_alias_to[alias] = elem['language']
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -237,6 +249,62 @@ def main():
 
         await interaction.followup.send(message)
 
+    @bot.slash_command(name="run_code", guild_ids=GUILD_IDS, description="코드를 실행한다")
+    async def run_code(
+        interaction: nextcord.Interaction,
+        code: str,
+        language: str = nextcord.SlashOption(
+            name="language",
+            choices=['python', 'c', 'c++', 'java', 'js', 'rust']
+        ),
+        stdin: Optional[str] = nextcord.SlashOption(required=False),
+        args: Optional[str] = nextcord.SlashOption(required=False),
+    ):
+        await interaction.response.defer()
+
+        if code[:3] != '```' or code[-3:] != '```' or code.count('```') != 2:
+            await interaction.followup.send("선새니 코드가 이상해" + '\n' + "\`\`\` (코드 내용) \`\`\` 이렇게 해봐")
+            return
+
+        code = code[3:-3]
+
+        if stdin is None :
+            stdin = ''
+        if args is None :
+            args = ''
+        language = bot.language_alias_to[language]
+
+        req = {
+            "language": language,
+            "version": bot.language_version[language],
+            "files": [{"content": code}],
+            "stdin": stdin,
+            "args": args,
+            "log": 0
+        }
+
+        # req = json.dumps(req)
+        res = requests.request("POST", "https://emkc.org/api/v2/piston/execute", data=json.dumps(req)).json()
+
+        # case 1. 컴파일 에러
+        if "complie" in res.keys() and res["complie"]["code"] != 0:
+            msg = f"컴파일 에러 (code {res['complie']['code']})"
+            msg += '\n'
+            msg += f"에러 메세지:\n```\n{res['complie']['stderr']}\n```"
+
+        # case 2. 런타임 에러
+        elif res["run"]["code"] != 0:
+            msg = f"런타임 에러 (code {res['run']['code']})"
+            msg += '\n'
+            msg += f"에러 메세지:\n```\n{res['run']['stderr']}\n```"
+
+        # case 3. 정상 실행
+        else:
+            msg = f"출력:\n```\n{res['run']['stdout']}\n```"
+
+        await interaction.followup.send(msg)
+        return
+    
     bot.run(TOKEN)
 
 @app.route('/')
